@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import DataSection from './DataSection';
+import { getVirusData } from './helpers';
+import { byCountryURL, worldwideURL } from './config';
 
 function App() {
-  const byCountryData = {};
-  const worldwideData = {};
+  const [byCountryData, setByCountryData] = useState({});
+  const [worldwideData, setWorldwideData] = useState({});
+
+  useEffect(function() {
+    getVirusData(byCountryURL, setByCountryData);
+  }, []);
+
+  useEffect(function() {
+    getVirusData(worldwideURL, setWorldwideData);
+  }, []);
 
   return (
     <div className="container">
