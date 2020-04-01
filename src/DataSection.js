@@ -1,13 +1,11 @@
 import React from 'react';
 
-const DataSection = function() {
-  const data = {};
-
+const DataSection = function({ title, description, data }) {
   return <section className="section">
     <div className="container">
       <header>
-        <h2 className="subtitle">Cases by country</h2>
-        <p className="content">Various information about the virus by country</p>
+        <h2 className="subtitle">{title}</h2>
+        <p className="content">{description}</p>
       </header>
       <p className="content">{JSON.stringify(data)}</p>
     </div>
