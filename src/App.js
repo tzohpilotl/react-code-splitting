@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import DataSection from './DataSection';
-import { getVirusData } from './helpers';
+import { useVirusData } from './hooks';
 import { byCountryURL, worldwideURL } from './config';
 
 function App() {
-  const [byCountryData, setByCountryData] = useState({});
-  const [worldwideData, setWorldwideData] = useState({});
-
-  useEffect(function() {
-    getVirusData(byCountryURL, setByCountryData);
-  }, []);
-
-  useEffect(function() {
-    getVirusData(worldwideURL, setWorldwideData);
-  }, []);
+  const { data: byCountryData } = useVirusData(byCountryURL);
+  const { data: worldwideData } = useVirusData(worldwideURL);
 
   return (
     <div className="container">
