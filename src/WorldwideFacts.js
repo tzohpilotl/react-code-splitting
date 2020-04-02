@@ -1,4 +1,7 @@
 import React from 'react';
+import Progress from './Progress';
+import { useVirusData } from './hooks';
+import { worldwideURL } from './config';
 
 const Fact = function({ fact }) {
   return <div className="column">
@@ -7,14 +10,17 @@ const Fact = function({ fact }) {
   </div>
 }
 
-const WorldwideFacts = function(worldwideData) {
+const WorldwideFacts = function() {
+  const { data } = useVirusData(worldwideURL);
+  if (!data) return <Progress />;
+
   const {
     total_cases: totalCases,
     total_deaths: totalDeaths,
     total_recovered: totalRecovered,
     new_cases: newCases,
     new_deaths: newDeaths,
-    statistic_taken_at: takenAt } = worldwideData.data;
+    statistic_taken_at: takenAt } = data;
 
   const facts = [
     {

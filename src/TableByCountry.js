@@ -1,6 +1,12 @@
 import React from 'react';
+import Progress from './Progress';
+import { useVirusData } from './hooks';
+import { byCountryURL } from './config';
 
-const TableByCountry = function({ data }) {
+const TableByCountry = function() {
+  const { data } = useVirusData(byCountryURL);
+  if (!data) return <Progress />;
+
   const byCountryData = data.countries_stat ? data.countries_stat.slice(0, 5) : [];
 
   return <table className="table is-fullwidth">

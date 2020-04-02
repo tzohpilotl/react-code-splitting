@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import Progress from './Progress';
 
-const withDataSection = function(DataComponent) {
-  return function({ title, description, data }) {
-    return <section className="section">
-      <div className="container">
-        <header style={{ marginBottom: "18px" }}>
-          <h2 className="subtitle">{title}</h2>
-          <p className="content">{description}</p>
-        </header>
+const withDataSection = function(componentFile) {
+  const DataComponent = React.lazy(() => import('./' + componentFile));
 
-        <DataComponent data={data} />
-      </div>
-    </section>
+  const WithDataSection = function({ title, description }) {
+    return (
+      <Suspense fallback={<Progress />}>
+        <section className="section">
+          <div className="container">
+            <header style={{ marginBottom: "18px" }}>
+              <h2 className="subtitle">{title}</h2>
+              <p className="content">{description}</p>
+            </header>
+          </div>
+          <DataComponent />
+        </section>
+      </Suspense>
+    );
   }
+
+  WithDataSection.displayName = `WithDataSection(${componentFile.name})`;
+
+  return WithDataSection;
 }
 
 export default withDataSection;
